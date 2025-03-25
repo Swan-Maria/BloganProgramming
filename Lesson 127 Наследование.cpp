@@ -224,30 +224,182 @@ public:
 	не доступны дочерним классам. Они работают точно так же как обычные поля и методы при наследовании.
 */
 
-class A
-{
-private:
-	int value;
-	static int staticValue;
-public:
-	void Method() { std::cout << "Method\n"; }
-	static void StaticMethod() { std::cout << "StaticMethod\n"; }
-};
-
-int A::staticValue = 10;
-
-class B : public A
-{
-public:
-
-
-};
+//class A
+//{
+//private:
+//	int value;
+//	static int staticValue;
+//public:
+//	void Method() { std::cout << "Method\n"; }
+//	static void StaticMethod() { std::cout << "StaticMethod\n"; }
+//};
+//
+//int A::staticValue = 10;
+//
+//class B : public A
+//{
+//public:
+//
+//
+//};
 
 /*
 	10. Наследование и шаблоны
 	Если необходимо наследоваться от шаблона класса, 
 	то нельзя создать специфичный конкретный класс от шаблона класса!
 */
+
+
+/*
+	11. Модификаторы наследования
+	Модификатор | A -> private member | A -> protected member | A -> public member
+	private A   | private member      | private member        | private member
+	protected A | private member	  | protected member      | protected member
+	public A    | private member	  | protected member      | public member
+*/
+
+/*class A
+{
+public:
+	void MethodA() {}
+};
+
+class B : private A
+{
+public:
+	void MethodB()
+	{
+		MethodA();
+	}
+};
+
+class C : protected B
+{
+public:
+	void MethodC()
+	{
+		//MethodA();//error
+	}
+};*/
+
+/*
+	12. Отличия структур от классов
+	В С++ между структурой и классом существует только два отличия:
+	1. Модификатор доступа по умолчанию: в структуре это public, в классе это private.
+	2. Модификатор наследования по умолчанию: в структуре это public, в классе это private.
+
+*/
+
+/*class MyClass
+{
+//private:
+	void Member();
+};
+
+struct MyStruct
+{
+//public:
+	void Member();
+};*/
+
+/*
+	13.	Реализация множественного наследования	
+	Класс может наследоваться от нескольких классов, однако следует помнить о конструкторах по умолчанию.
+	Лучше избегать использования множественного наследования.
+	Проблемой множественного наследования является так называемое "ромбовидно" наследование:
+	ситуация, когда два класса наследуются от родительского класса, тогда получается,
+	что в самом дочернем классе, который наследуется от этих двух, будет несколько объектов их же родительского класса.
+*/
+
+/*
+	14. Виртуальное наследование
+	Модификатор virtual решает проблему множественного ромбовидного наследования классов, так как с его 
+	применением для самого дочернего класса уже не будет создаваться несколько объектов "прародительского" класса.
+	Самый базовый конструктор, который наследуется виртуально, в самом довернем классе вызывается только один раз. 
+*/
+
+class Person
+{
+private:
+	const char* name;
+	int age;
+public:
+	Person(const char* name, int age)
+		:name(name), age(age)
+	{
+	}
+	const char* GetName() const { return name; }
+};
+
+class Student: virtual public Person
+{
+private:
+	int course;
+	double scholarship;
+	int subjects;
+public:
+	Student(const char* name, int age, int course, double scholarship, int subjects)
+		: Person(name, age)
+		, course(course), scholarship(scholarship), subjects(subjects)
+	{	}
+	int GetCourse() const{ return course; }
+	/*void SayName(const char* name)
+	{
+		std::cout << "I'm a student. My name is " << name << std::endl;
+	}
+	~Student()
+	{
+		std::cout << "Student::~Student()\n";
+	}*/
+};
+
+class Suit{};
+
+class Waiter : virtual public Person
+{
+private:
+	Suit suit;
+	double salary;
+	const char* company;
+public:
+	Waiter(const char* name, int age, double salary, const char* company)
+		: Person(name, age)
+		,salary(salary), company(company)
+	{}
+	double Salary() const { return salary; }
+	/*void SayName(const char* name)
+	{
+		std::cout << "I'm a waiter. My name is " << name << std::endl;
+	}
+	~Waiter()
+	{
+		std::cout << "Waiter::~Waiter()\n";
+	}*/
+
+};
+
+class StudentWaiter :public Student, public Waiter
+{
+private:
+	int daysToDeath;
+public:
+	StudentWaiter(
+		const char* name, int age,
+		int daysToDeath, 
+		int course, double scholarship, int subjects,
+		double salary, const char* company)
+		: Student("Student Demian", age, course, scholarship, subjects)
+		, Waiter("Waiter Demien", age, salary, company)
+		,  Person(name, age)
+		, daysToDeath(daysToDeath)
+	{ }
+
+	void Pray(const char* pray)
+	{
+		std::cout << pray << std::endl;
+	}
+};
+
 
 int main()
 {
@@ -345,7 +497,7 @@ int main()
 	B::StaticMethod();*/
 
 	// 10. Наследование и шаблоны
-	Array<double> arr1(10);
+	/*Array<double> arr1(10);
 	for (size_t i = 0; i < arr1.Size(); i++)
 	{
 		arr1[i] = i / 123.0;
@@ -361,7 +513,36 @@ int main()
 	{
 		arr2[i] = i / 123.0;
 		std::cout << arr2[i] << " ";
-	}
+	}*/
 
+	// 11. Модификаторы наследования
+	/*B objectB;
+	//objectB.MethodA();//error
+	
+	A objectA;
+	objectA.MethodA();*/
+	
+	// 12. Отличия структур от классов
+	/*MyClass	object1;
+	object1.Member();
+
+	MyStruct object2;
+	object2.Member();*/
+
+	// 13. Реализация множественного наследования
+	/*{
+		StudentWaiter man(23, 4, 25.00, 15, 90.00, "MacDonald's");
+		man.Pray("Please, help me!");
+		std::cout << "Course = " << man.GetCourse() << std::endl;
+		std::cout << "Salary = $" << man.Salary() << std::endl;
+		man.Student::SayName("Demien");
+		man.Waiter::SayName("Demien");
+	}*/
+	
+	// 14. Виртуальное наследование
+	
+	StudentWaiter man("Demien", 24, 23, 4, 25.00, 15, 90.00, "MacDonald's");
+	std::cout << man.GetName() << std::endl;
+	
 	return 0;
 }
