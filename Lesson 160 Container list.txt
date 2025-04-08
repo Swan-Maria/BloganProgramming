@@ -1,22 +1,22 @@
 В библиотеке STL есть много контейнеров. Я постараюсь сделать урок по каждому из них. Они делятся на категории:
 
 	Последовательные контейнеры (Sequence containers):
-	1. [+] vector
-	2. [ ] list
-	3. [ ] forward_list
-	4. [ ] deque
-	5. [ ] array
+	1.  [+] vector
+	2.  [ ] list
+	3.  [ ] forward_list
+	4.  [ ] deque
+	5.  [ ] array
 
 	Адаптеры контейнеров (Container adaptors):
-	6. [ ] stack
-	7. [ ] queue
-	8. [ ] priority_queue
+	6.  [ ] stack
+	7.  [ ] queue
+	8.  [ ] priority_queue
 
 	Ассоциативные контейнеры (Associative containers):
-	9. [ ] set
-	10. [ ] multiset
-	11. [ ] map
-	12. [ ] multimap
+	9.  [+] set
+	10. [+] multiset
+	11. [+] map
+	12. [+] multimap
 
 	Неупорядоченные ассоциативные контейнеры (Unordered associative containers):
 	13. [ ] unordered_set
